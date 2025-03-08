@@ -13,14 +13,32 @@ def home():
 @app.route('/predict_api', methods=['POST'])
 def predict_api():
     try:
-        data = request.json["data"]
-        input_array = np.array(data, dtype=np.float32).reshape(1, -1)
-        proba = xgmodel.predict_proba(input_array)[0][1]  # Get fraud probability
+        data = request.json  # Get JSON data
+        print("Received JSON:", data)  # Debugging
 
-        return jsonify({'prediction': round(float(proba), 4)})  # Round to 4 decimals
+        # Ensure correct JSON format
+        if isinstance(data, dict) and "data" in data:
+            data = data["data"]
+        
+        # Ensure input is a flat list
+        if not isinstance(data, list):
+            return jsonify({'error': 'Input should be a list of values'}), 400
+
+        # Convert to NumPy array and reshape
+        input_array = np.array(data, dtype=np.float32).reshape(1, -1)
+        print("Processed input shape:", input_array.shape)  # Debugging
+
+        # Validate feature count
+        if input_array.shape[1] != 17:
+            return jsonify({'error': f'Feature shape mismatch, expected: 17, got {input_array.shape[1]}'}), 400
+
+        # Predict using the model
+        output = xgmodel.predict(input_array)
+
+        return jsonify({'prediction': int(output[0])})
 
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == "__main__":
