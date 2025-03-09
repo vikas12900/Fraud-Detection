@@ -3,6 +3,5 @@ scikit-learn
 matplotlib
 pandas
 numpy
-matplotlib
 xgboost
 gunicorn
