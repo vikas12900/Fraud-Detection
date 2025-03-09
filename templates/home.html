@@ -1,3 +1,51 @@
-<h1>
-     Hello world
-</h1>
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+
+  
+</head>
+
+<body>
+ <div class="login">
+	<h1>Fraud Transaction Detector</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+     <form action="/predict_api" method="post">
+          <input type="text" name="Transaction_Amount" placeholder="Transaction Amount" required /><br>
+          <input type="text" name="Transaction_Type" placeholder="Transaction Type" required /><br>
+          <input type="text" name="Account_Balance" placeholder="Account Balance" required /><br>
+          <input type="text" name="Device_Type" placeholder="Device Type" required /><br>
+          <input type="text" name="Location" placeholder="Location" required /><br>
+          <input type="text" name="Previous_Fraudulent_Activity" placeholder="Previous Fraudulent Activity" required /><br>
+          <input type="text" name="Merchant_Category" placeholder="Merchant Category" required /><br>
+          <input type="text" name="IP_Address_Flag" placeholder="IP Address Flag" required /><br>
+          <input type="text" name="Daily_Transaction_Count" placeholder="Daily Transaction Count" required /><br>
+          <input type="text" name="Avg_Transaction_Amount_7d" placeholder="Avg Transaction Amount (7 days)" required /><br>
+          <input type="text" name="Failed_Transaction_Count_7d" placeholder="Failed Transaction Count (7 days)" required /><br>
+          <input type="text" name="Card_Type" placeholder="Card Type" required /><br>
+          <input type="text" name="Card_Age" placeholder="Card Age" required /><br>
+          <input type="text" name="Transaction_Distance" placeholder="Transaction Distance" required /><br>
+          <input type="text" name="Authentication_Method" placeholder="Authentication Method" required /><br>
+          <input type="text" name="Risk_Score" placeholder="Risk Score" required /><br>
+          <input type="text" name="Is_Weekend" placeholder="Is Weekend (0/1)" required /><br>
+          
+          <button type="submit">Predict</button>
+      </form>
+      
+
+   <br>
+   <br>
+  
+   
+ </div>
+ {{prediction_text}}
+
+</body>
+</html>
