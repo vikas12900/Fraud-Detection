@@ -1,10 +1,8 @@
 import pickle
 from flask import Flask, request, jsonify, render_template
-from flask_cors import CORS
 import numpy as np
 
 app = Flask(__name__)
-CORS(app)
 
 # Load trained model
 xgmodel = pickle.load(open("xgmodel.pkl", "rb"))
@@ -16,7 +14,7 @@ def home():
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        # Extract form data
+
         data = [float(request.form[key]) for key in request.form.keys()]
         
         # Convert to NumPy array
@@ -31,7 +29,6 @@ def predict():
     except Exception as e:
         return render_template("home.html", prediction_text=f"Error: {str(e)}")
 
-# **Handles API Calls (Works with Postman)**
 @app.route("/predict_api", methods=["POST"])
 def predict_api():
     try:
@@ -45,17 +42,14 @@ def predict_api():
         else:
             feature_values = [float(request.form[key]) for key in request.form.keys()]
        
-        # Validate data
         if not isinstance(feature_values, list) or len(feature_values) != 17:
             return jsonify({"error": "Feature shape mismatch, expected: 17 values"}), 400
            
         # Convert to NumPy array
         final_input = np.array(feature_values, dtype=np.float32).reshape(1, -1)
        
-        # Make predictions - only get the class prediction (0 or 1)
         prediction = int(xgmodel.predict(final_input)[0])
        
-        # Return only the binary prediction (0 or 1)
         return jsonify({
             "prediction": prediction
         })
