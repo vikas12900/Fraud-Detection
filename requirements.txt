@@ -3,5 +3,5 @@ scikit-learn
 matplotlib
 pandas
 numpy
-xgboost==1.7.6
+xgboost
 gunicorn
